@@ -1,0 +1,78 @@
+import random, os, time
+
+def rollDice(side):
+  result = random.randint(1,side)
+  return result
+
+def health():
+  healthStat = ((rollDice(6)*rollDice(12))/2)+10
+  return healthStat
+
+def strength():
+  strengthStat = ((rollDice(6)*rollDice(8))/2)+12
+  return strengthStat
+
+print("Character Battles")
+print()
+time.sleep(1)
+os.system("clear")
+
+while True:
+  ch1Name = input("Name your Legend: ")
+  ch1Type = input("Character Type (Human, Elf, Wizard, Orc): ")
+  print()
+  print(ch1Name)
+  ch1Health = health()
+  ch1Strength = strength()
+  print("HEALTH:", ch1Health)
+  print("STRENGTH:", ch1Strength)
+  print()
+  print("And the opponent ")
+  print()
+  ch2Name = input("Name your Legend: ")
+  ch2Type = input("Character Type (Human, Elf, Wizard, Orc): ")
+  print()
+  print(ch2Name)
+  ch2Health = health()
+  ch2Strength = strength()
+  print("HEALTH:", ch2Health)
+  print("STRENGTH:", ch2Strength)
+  print()
+
+  difference = abs(ch1Strength - ch2Strength)
+  
+  def fight(difference, ch1Health, ch2Health):
+    ch1Name = rollDice(6)
+    ch2Name = rollDice(6)
+    if ch1Name > ch2Name:
+      damage = difference + 1
+      ch2Health -= damage
+      print("character 1 health: ", ch1Health, "character 2 health: ", ch2Health)
+      return ch1Health, ch2Health
+    elif ch1Name < ch2Name:
+      damage = difference + 1
+      ch1Health -= damage
+      print("character 1 health: ", ch1Health, "character 2 health: ", ch2Health)
+      return ch1Health, ch2Health
+    else:
+      print("draw")
+      return ch1Health, ch2Health
+    
+  round = 0
+  while True:
+    round+= 1
+    print("Round", round)
+    ch1Health, ch2Health = fight(difference, ch1Health, ch2Health)
+    time.sleep(1)
+    os.system("clear")
+    if ch1Health <= 0:
+      print("round", round)
+      print(ch2Name, "Wins")
+      break
+    if ch2Health <= 0:
+      print("round", round)
+      print(ch1Name, "Wins")
+      break
+    else:
+      continue
+  break
